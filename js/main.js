@@ -10,7 +10,9 @@ let tasks = JSON.parse(localStorage.getItem('task')); // заполняем ма
 form.addEventListener('submit', addTask);
 tasksList.addEventListener('click', deleteTask);
 tasksList.addEventListener('click', completedTask);
-
+renderInPage();
+initCounterTasks();
+progressTasks();
 
 
 
@@ -63,6 +65,7 @@ function addTask(e) {
   }
 
   saveArrayinLocalStorage();
+  initCounterTasks();
 }
 
 function deleteTask(e) {
@@ -84,7 +87,8 @@ function deleteTask(e) {
   }
 
   saveArrayinLocalStorage();
-
+  initCounterTasks();
+  progressTasks();
 };
 
 function completedTask(e) {
@@ -93,6 +97,17 @@ function completedTask(e) {
 
   const taskText = target.closest('li').querySelector('.task-title');
   taskText.classList.toggle('task-title--done');
+
+  const id = Number(target.closest('li').id);
+  const index = tasks.findIndex((task) => task.id === id);
+
+  if (tasks[index].done === false) {
+    tasks[index].done = true;
+  } else {
+    tasks[index].done = false;
+  }
+  saveArrayinLocalStorage();
+  progressTasks();
 };
 
 
@@ -131,4 +146,17 @@ function renderInPage() {
 
 }
 
-renderInPage();
+// Счетчик задач
+
+function initCounterTasks() {
+  const allTasks = document.querySelector('.count-tasks__all');
+  allTasks.innerHTML = tasks.length;
+}
+
+// прогресс выполненные задач
+function progressTasks() {
+  const arrayCompletedTasks = tasks.filter(elem => elem.done === true); // записываем в массив только выполненные задачи
+  const countValueNode = document.querySelector('.count-tasks__number');
+  countValueNode.innerHTML = arrayCompletedTasks.length;
+}
+
