@@ -4,7 +4,12 @@ const taskInput = document.querySelector('#taskInput');
 const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
 
-let tasks = JSON.parse(localStorage.getItem('task')); // заполняем массив значениями из localStorage; 
+if (localStorage.getItem('task')) {
+  var tasks = JSON.parse(localStorage.getItem('task')); // заполняем массив значениями из localStorage; 
+} else {
+  var tasks = [];
+}
+
 
 
 form.addEventListener('submit', addTask);
