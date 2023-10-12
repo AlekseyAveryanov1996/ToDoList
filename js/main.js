@@ -3,6 +3,7 @@ const form = document.querySelector('#form');
 const taskInput = document.querySelector('#taskInput');
 const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
+const searhInput = document.querySelector('#taskSearch');
 
 if (localStorage.getItem('task')) {
   var tasks = JSON.parse(localStorage.getItem('task')); // заполняем массив значениями из localStorage; 
@@ -18,6 +19,8 @@ tasksList.addEventListener('click', completedTask);
 renderInPage();
 initCounterTasks();
 progressTasks();
+searchTasksDisabled();
+search()
 
 
 
@@ -71,6 +74,7 @@ function addTask(e) {
 
   saveArrayinLocalStorage();
   initCounterTasks();
+  searchTasksDisabled();
 }
 
 function deleteTask(e) {
@@ -94,6 +98,7 @@ function deleteTask(e) {
   saveArrayinLocalStorage();
   initCounterTasks();
   progressTasks();
+  searchTasksDisabled();
 };
 
 function completedTask(e) {
@@ -165,3 +170,20 @@ function progressTasks() {
   countValueNode.innerHTML = arrayCompletedTasks.length;
 }
 
+function searchTasksDisabled() {
+  console.log(tasks.length);
+  (tasks.length > 1) ? searhInput.classList.remove('search__input_disabled') : searhInput.classList.add('search__input_disabled');
+}
+
+function search() {
+  searhInput.addEventListener('input', () => {
+    let searchValue = searhInput.value.toLowerCase();
+    let arr = document.querySelectorAll('#tasksList li .task-title');
+    arr.forEach(elem => elem.parentElement.classList.add('none'))
+    filterSearch(searchValue, arr);
+  });
+}
+
+function filterSearch(value, array) {
+  array.forEach(elem => (elem.innerHTML.toLocaleLowerCase().includes(value)) ? elem.parentElement.classList.remove('none') : null);
+}

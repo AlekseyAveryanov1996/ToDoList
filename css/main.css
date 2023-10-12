@@ -113,6 +113,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  visibility: hidden;
 }
 .popap-progress {
   padding: 40px;
@@ -120,4 +122,17 @@ body {
   border-radius: 6px;
 }
 .popap-progress__title {
+}
+
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search__input_disabled {
+  pointer-events: none;
+  opacity: 0.3;
 }
