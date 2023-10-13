@@ -89,6 +89,8 @@ function deleteTask(e) {
 
   tasks.splice(index, 1);
 
+  // document.querySelectorAll('#tasksList li.task-item').classList.remove('none');
+
   target.closest('li').remove();
 
   if (tasksList.children.length === 1) {
@@ -100,6 +102,8 @@ function deleteTask(e) {
   progressTasks();
   searchTasksDisabled();
 };
+
+
 
 function completedTask(e) {
   let target = e.target;
@@ -171,8 +175,12 @@ function progressTasks() {
 }
 
 function searchTasksDisabled() {
-  console.log(tasks.length);
-  (tasks.length > 1) ? searhInput.classList.remove('search__input_disabled') : searhInput.classList.add('search__input_disabled');
+  if (tasks.length > 1) {
+    searhInput.classList.remove('search__input_disabled')
+  } else { 
+    searhInput.classList.add('search__input_disabled')
+    searhInput.value = '';
+  }
 }
 
 function search() {
